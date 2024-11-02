@@ -8,7 +8,7 @@ import (
 )
 
 type CSVParser struct {
-	expectedFields int // Beklenen alan sayısı
+	expectedFields int 
 }
 
 func NewCSVParser(expectedFields int) *CSVParser {
@@ -19,7 +19,7 @@ func (p *CSVParser) Parse(filePath string) [][]string {
 	file, err := os.Open(filePath)
 	if err != nil {
 		log.Printf("Failed to open file: %s, error: %v", filePath, err)
-		return nil // Dosya açılamazsa nil döneriz
+		return nil 
 	}
 	defer func() {
 		if cerr := file.Close(); cerr != nil {
@@ -37,22 +37,22 @@ func (p *CSVParser) Parse(filePath string) [][]string {
 
 		if err != nil {
 			if err.Error() == "EOF" {
-				break // Dosyanın sonuna gelindiyse döngüyü sonlandır
+				break 
 			}
 			log.Printf("Failed to read CSV record on line %d: %v", lineNumber, err)
-			continue // Hata varsa bir sonraki kayda geç
+			continue 
 		}
 
-		// Boş satırları kontrol et
+		
 		if len(record) == 0 || allFieldsEmpty(record) {
 			log.Printf("Warning: empty record on line %d", lineNumber)
-			continue // Boş satırları atla
+			continue 
 		}
 
-		// Beklenen alan sayısını kontrol et
+		
 		if p.expectedFields > 0 && len(record) != p.expectedFields {
 			log.Printf("Warning: record on line %d has wrong number of fields: expected %d, got %d", lineNumber, p.expectedFields, len(record))
-			continue // Beklenen alan sayısına uymayan kayıtları atla
+			continue 
 		}
 
 		validRecords = append(validRecords, record)
@@ -62,17 +62,17 @@ func (p *CSVParser) Parse(filePath string) [][]string {
 	return validRecords
 }
 
-// allFieldsEmpty checks if all fields in the record are empty
+
 func allFieldsEmpty(record []string) bool {
 	for _, field := range record {
 		if strings.TrimSpace(field) != "" {
-			return false // Eğer bir alan doluysa false döner
+			return false 
 		}
 	}
-	return true // Tüm alanlar boşsa true döner
+	return true 
 }
 
-// FindRowsWithKeyword searches for the keyword in the parsed records and returns the matching rows
+
 func (p *CSVParser) FindRowsWithKeyword(records [][]string, keyword string) [][]string {
 	var matchingRecords [][]string
 
@@ -80,7 +80,7 @@ func (p *CSVParser) FindRowsWithKeyword(records [][]string, keyword string) [][]
 		for _, field := range record {
 			if strings.Contains(strings.ToLower(field), strings.ToLower(keyword)) {
 				matchingRecords = append(matchingRecords, record)
-				break // Eğer kelime bulunduysa bu kaydı ekleyip döngüden çık
+				break 
 			}
 		}
 	}
