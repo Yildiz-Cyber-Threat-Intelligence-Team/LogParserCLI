@@ -6,10 +6,8 @@ import (
 	"os"
 )
 
-// TXTParser yapısı
 type TXTParser struct{}
 
-// Parse fonksiyonu: TXT dosyasını okur ve içerik olarak döner
 func (p *TXTParser) Parse(filePath string) []string {
 	file, err := os.Open(filePath)
 	if err != nil {
