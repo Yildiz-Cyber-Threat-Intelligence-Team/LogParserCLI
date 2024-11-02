@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-// CSV içindeki satırları tarar ve anahtar kelimenin geçtiği yerleri bulur
+
 func SearchInCSV(data [][]string, keyword string) {
 	for _, row := range data {
 		for _, field := range row {
