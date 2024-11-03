@@ -1,26 +1,32 @@
 package parsers
 
 import (
+	"encoding/xml"
 	"fmt"
 	"strings"
 )
 
-func SearchInXML(data []Entry, keyword string) {
-	var found bool
-	for _, entry := range data {
-		if strings.Contains(entry.URL, keyword) {
-			found = true
-			fmt.Println("Found the following information:")
-			fmt.Println("===============================")
-			fmt.Println("URL:", entry.URL)
-			fmt.Println("Username:", entry.Username)
-			fmt.Println("Password:", entry.Password)
-			fmt.Println("Application:", entry.Application)
-			fmt.Println("===============================")
+
+func SearchInXML(data string, keyword string) {
+	decoder := xml.NewDecoder(strings.NewReader(data))
+	for {
+		token, err := decoder.Token()
+		if err != nil {
+			break
+		}
+		switch elem := token.(type) {
+		case xml.StartElement:
+		
+			if strings.Contains(elem.Name.Local, keyword) {
+				fmt.Println("Found in element:", elem.Name.Local)
+			}
+		case xml.CharData:
+		
+			content := string(elem)
+			if strings.Contains(content, keyword) {
+				fmt.Println("Found in content:", content)
+			}
 		}
 	}
-
-	if !found {
-		fmt.Println("No information found for the keyword:", keyword)
-	}
 }
+
