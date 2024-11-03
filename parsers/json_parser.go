@@ -7,10 +7,10 @@ import (
 	"os"
 )
 
-// JSONParser yapısı
+
 type JSONParser struct{}
 
-// Parse fonksiyonu: JSON dosyasını okur ve içerik olarak bir dilim (slice) döner
+
 func (p *JSONParser) Parse(filePath string) []map[string]interface{} {
 	file, err := os.Open(filePath)
 	if err != nil {
