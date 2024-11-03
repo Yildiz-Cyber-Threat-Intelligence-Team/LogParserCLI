@@ -1,36 +1,26 @@
 package parsers
 
 import (
-	"encoding/xml"
 	"io/ioutil"
 	"log"
 	"os"
 )
 
+
 type XMLParser struct{}
 
-type Entry struct {
-	XMLName     xml.Name `xml:"entry"`
-	URL         string   `xml:"URL"`
-	Username    string   `xml:"Username"`
-	Password    string   `xml:"Password"`
-	Application string   `xml:"Application"`
-}
 
-func (p *XMLParser) Parse(filePath string) []Entry {
+func (p *XMLParser) Parse(filePath string) string {
 	file, err := os.Open(filePath)
 	if err != nil {
 		log.Fatalf("Failed to open file: %v", err)
 	}
 	defer file.Close()
 
-	byteValue, _ := ioutil.ReadAll(file)
-
-	var entries []Entry
-	err = xml.Unmarshal(byteValue, &entries)
+	byteValue, err := ioutil.ReadAll(file)
 	if err != nil {
-		log.Fatalf("Failed to parse XML: %v", err)
+		log.Fatalf("Failed to read file: %v", err)
 	}
 
-	return entries
+	return string(byteValue)
 }
