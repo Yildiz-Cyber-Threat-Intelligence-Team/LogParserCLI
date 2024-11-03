@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-// JSON içindeki log mesajlarını tarar ve anahtar kelimenin geçtiği yerleri bulur
+
 func SearchInJSON(data []map[string]interface{}, keyword string) {
 	for _, entry := range data {
 		if message, ok := entry["message"].(string); ok {
@@ -16,7 +16,7 @@ func SearchInJSON(data []map[string]interface{}, keyword string) {
 	}
 }
 
-// Anahtar kelime kontrolü
+
 func containsKeyword(message, keyword string) bool {
 	return strings.Contains(message, keyword)
 }
